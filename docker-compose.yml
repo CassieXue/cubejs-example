@@ -1,0 +1,23 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    container_name: cubejs-redis-vue
+    ports:
+    - 6378:6379
+    volumes:
+    - ./redis_data:/data
+    command: redis-server --appendonly yes
+
+  mysql_db:
+    image: mysql:5.7.20
+    container_name: cubejs-mysql-vue
+    ports:
+    - 3305:3306
+    volumes:
+    - ./mysql_data:/var/lib/mysql/
+    environment:
+    - MYSQL_USER=root
+    - MYSQL_ROOT_PASSWORD=12345678
+    - MYSQL_DATABASE=cubejs
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8 --explicit_defaults_for_timestamp
